@@ -13,8 +13,7 @@ export function Hero() {
     <section
       className="relative flex min-h-[600px] items-center overflow-hidden bg-brand-dark text-white sm:min-h-[650px] lg:min-h-[850px]"
       style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1920&auto=format&fit=crop')",
+        backgroundImage: "url('/hero.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
