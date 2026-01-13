@@ -110,8 +110,13 @@ export function Header() {
   }, [isMobileMenuOpen]);
 
   // Close mobile menu when clicking on a link
-  const handleLinkClick = () => {
+  const handleLinkClick = (href: string) => {
     setIsMobileMenuOpen(false);
+    // Smooth scroll to the target element
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -267,45 +272,45 @@ export function Header() {
         }`}
       >
         <nav className="flex flex-col p-6">
-          <a
-            href="#top"
-            onClick={handleLinkClick}
-            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          <button
+            type="button"
+            onClick={() => handleLinkClick('#top')}
+            className="border-white/20 border-b py-4 text-left font-bold text-lg text-white transition-colors hover:text-brand-yellow"
           >
             Home
-          </a>
-          <a
-            href="#services"
-            onClick={handleLinkClick}
-            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          </button>
+          <button
+            type="button"
+            onClick={() => handleLinkClick('#services')}
+            className="border-white/20 border-b py-4 text-left font-bold text-lg text-white transition-colors hover:text-brand-yellow"
           >
             Services
-          </a>
-          <a
-            href="#about"
-            onClick={handleLinkClick}
-            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          </button>
+          <button
+            type="button"
+            onClick={() => handleLinkClick('#about')}
+            className="border-white/20 border-b py-4 text-left font-bold text-lg text-white transition-colors hover:text-brand-yellow"
           >
             About
-          </a>
-          <a
-            href="#contact"
-            onClick={handleLinkClick}
-            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          </button>
+          <button
+            type="button"
+            onClick={() => handleLinkClick('#contact')}
+            className="border-white/20 border-b py-4 text-left font-bold text-lg text-white transition-colors hover:text-brand-yellow"
           >
             Contact
-          </a>
+          </button>
           <div className="mt-6 space-y-4">
-            <a
-              href="#contact"
-              onClick={handleLinkClick}
+            <button
+              type="button"
+              onClick={() => handleLinkClick('#contact')}
               className="block w-full cursor-pointer rounded-lg bg-brand-dark px-6 py-4 text-center font-bold text-white shadow-md transition-all hover:bg-brand-dark-dark"
             >
               BOOK NOW
-            </a>
+            </button>
             <a
               href="tel:6362135272"
-              onClick={handleLinkClick}
+              onClick={() => setIsMobileMenuOpen(false)}
               className="flex cursor-pointer items-center justify-center gap-3 rounded-lg bg-brand-yellow px-6 py-4 font-bold text-brand-dark shadow-md transition-all hover:bg-brand-yellow-dark"
             >
               <Phone className="h-5 w-5" fill="currentColor" />
