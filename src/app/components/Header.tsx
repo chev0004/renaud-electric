@@ -73,7 +73,7 @@ export function Header() {
   return (
     <>
       {/* Top Info Bar */}
-      <div ref={topInfoBarRef} className="bg-brand-yellow py-2 text-brand-dark">
+      <div ref={topInfoBarRef} className="hidden bg-brand-yellow py-2 text-brand-dark sm:block">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-2 px-4 text-[10px] sm:justify-between sm:gap-4 sm:px-6 sm:text-xs lg:px-8">
           <div className="flex items-center gap-1.5 sm:gap-2">
             <Phone className="h-3 w-3 text-brand-dark sm:h-4 sm:w-4" />

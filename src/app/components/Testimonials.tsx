@@ -91,6 +91,7 @@ export function Testimonials() {
         <div className="mb-16 text-center">
           <h2 className="mb-4 font-black text-4xl text-white tracking-tight sm:text-5xl">
             What Your Neighbors Are{' '}
+            <br />
             <span className="text-brand-yellow">Saying About Us</span>
           </h2>
         </div>
