@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { BeforeAfterSlider } from './BeforeAfterSlider';
 import { CurvedEdges } from './CurvedEdges';
 
 export function WhyChooseUs() {
@@ -11,13 +11,12 @@ export function WhyChooseUs() {
       <div className="absolute inset-0 bg-brand-red/90"></div>
       <CurvedEdges />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-20 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-10 pb-10 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Left Content */}
           <div className="space-y-6">
             <h2 className="font-black text-4xl text-white tracking-tight sm:text-5xl">
-              Why Choose{' '}
-              <br />
+              Why Choose <br />
               <span className="text-brand-yellow">Renaud Electric</span>
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
@@ -47,16 +46,9 @@ export function WhyChooseUs() {
             </div>
           </div>
 
-          {/* Right Image */}
+          {/* Right Slider */}
           <div className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
-              <Image
-                src="/why-choose.jpg"
-                alt="Drew Renaud, Owner and Principal of Renaud Electric LLC"
-                fill
-                className="object-cover"
-              />
-            </div>
+            <BeforeAfterSlider inline />
           </div>
         </div>
       </div>
