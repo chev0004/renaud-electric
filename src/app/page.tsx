@@ -1,15 +1,25 @@
+import { ContactSection } from './components/ContactSection';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { Hero } from './components/Hero';
+import { Services } from './components/Services';
+import { SpecialOffers } from './components/SpecialOffers';
+import { Testimonials } from './components/Testimonials';
+import { WhyChooseUs } from './components/WhyChooseUs';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
-        <h1 className="text-4xl font-bold text-center mb-8">
-          Welcome to Next.js
-        </h1>
-        <p className="text-center text-lg text-gray-600">
-          Get started by editing{' '}
-          <code className="bg-gray-100 px-2 py-1 rounded">src/app/page.tsx</code>
-        </p>
-      </div>
-    </main>
+    <div id="top" className="flex min-h-screen flex-col">
+      <Header />
+      <main>
+        <Hero />
+        <Services />
+        <WhyChooseUs />
+        <SpecialOffers />
+        <Testimonials />
+        <ContactSection />
+      </main>
+      <Footer />
+    </div>
   );
 }
