@@ -90,8 +90,7 @@ export function Testimonials() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-20 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
           <h2 className="mb-4 font-black text-4xl text-white tracking-tight sm:text-5xl">
-            What Your Neighbors Are{' '}
-            <br />
+            What Your Neighbors Are <br />
             <span className="text-brand-yellow">Saying About Us</span>
           </h2>
         </div>
