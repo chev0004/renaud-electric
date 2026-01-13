@@ -17,6 +17,7 @@ export function WhyChooseUs() {
           <div className="space-y-6">
             <h2 className="font-black text-4xl text-white tracking-tight sm:text-5xl">
               Why Choose{' '}
+              <br />
               <span className="text-brand-yellow">Renaud Electric</span>
             </h2>
             <p className="text-gray-300 text-lg leading-relaxed">
