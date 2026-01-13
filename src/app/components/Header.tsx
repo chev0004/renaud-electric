@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [navbarOffset, setNavbarOffset] = useState(0);
+  const lastScrollY = useRef(0);
   const topInfoBarRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -53,6 +55,48 @@ export function Header() {
     };
   }, []);
 
+  // Handle scroll direction for mobile navbar hide/show
+  useEffect(() => {
+    const navbarHeight = headerRef.current?.offsetHeight || 64;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isMobile = window.innerWidth < 768; // md breakpoint
+
+      if (!isMobile) {
+        setNavbarOffset(0);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Don't hide navbar when mobile menu is open
+      if (isMobileMenuOpen) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Calculate scroll delta
+      const delta = currentScrollY - lastScrollY.current;
+
+      // Update offset based on scroll direction
+      setNavbarOffset((prev) => {
+        // When at the very top, always show navbar
+        if (currentScrollY <= 0) return 0;
+
+        // Calculate new offset
+        const newOffset = prev + delta;
+
+        // Clamp between 0 and navbar height
+        return Math.max(0, Math.min(navbarHeight, newOffset));
+      });
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMobileMenuOpen]);
+
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -73,7 +117,10 @@ export function Header() {
   return (
     <>
       {/* Top Info Bar */}
-      <div ref={topInfoBarRef} className="hidden bg-brand-yellow py-2 text-brand-dark sm:block">
+      <div
+        ref={topInfoBarRef}
+        className="hidden bg-brand-yellow py-2 text-brand-dark sm:block"
+      >
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-2 px-4 text-[10px] sm:justify-between sm:gap-4 sm:px-6 sm:text-xs lg:px-8">
           <div className="flex items-center gap-1.5 sm:gap-2">
             <Phone className="h-3 w-3 text-brand-dark sm:h-4 sm:w-4" />
@@ -93,6 +140,10 @@ export function Header() {
       {/* Main Header */}
       <header
         ref={headerRef}
+        style={{
+          transform:
+            navbarOffset > 0 ? `translateY(-${navbarOffset}px)` : undefined,
+        }}
         className="sticky top-0 z-50 border-brand-yellow/20 border-b bg-brand-red py-3 text-white shadow-md sm:py-4"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -174,82 +225,84 @@ export function Header() {
             )}
           </button>
         </div>
+      </header>
 
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <button
-            type="button"
-            style={{
-              top: `${headerHeight - 1}px`,
-              left: 0,
-              right: 0,
-              bottom: 0,
-            }}
-            className="fixed z-40 bg-black/50 backdrop-blur-sm md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Close menu"
-          />
-        )}
-
-        {/* Mobile Menu Slide-in Panel */}
-        <div
+      {/* Mobile Menu Overlay - Outside header to avoid transform issues */}
+      {isMobileMenuOpen && (
+        <button
+          type="button"
           style={{
             top: `${headerHeight - 1}px`,
-            height: `calc(100vh - ${headerHeight - 1}px)`,
+            left: 0,
+            right: 0,
+            bottom: 0,
           }}
-          className={`fixed right-0 z-50 w-80 max-w-[85vw] transform bg-brand-red shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <nav className="flex flex-col p-6">
-            <a
-              href="#top"
-              onClick={handleLinkClick}
-              className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
-            >
-              Home
-            </a>
-            <a
-              href="#services"
-              onClick={handleLinkClick}
-              className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
-            >
-              Services
-            </a>
-            <a
-              href="#about"
-              onClick={handleLinkClick}
-              className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
-            >
-              About
-            </a>
+          className="fixed z-40 bg-black/50 backdrop-blur-sm md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-label="Close menu"
+        />
+      )}
+
+      {/* Mobile Menu Slide-in Panel - Outside header to avoid transform issues */}
+      <div
+        style={{
+          top: `${headerHeight - 1}px`,
+          height: `calc(100vh - ${headerHeight - 1}px)`,
+        }}
+        className={`fixed right-0 z-50 w-80 max-w-[85vw] transform bg-brand-red shadow-2xl transition-[transform,visibility] duration-300 ease-in-out md:hidden ${
+          isMobileMenuOpen
+            ? 'visible translate-x-0'
+            : 'invisible translate-x-full'
+        }`}
+      >
+        <nav className="flex flex-col p-6">
+          <a
+            href="#top"
+            onClick={handleLinkClick}
+            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          >
+            Home
+          </a>
+          <a
+            href="#services"
+            onClick={handleLinkClick}
+            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          >
+            Services
+          </a>
+          <a
+            href="#about"
+            onClick={handleLinkClick}
+            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          >
+            About
+          </a>
+          <a
+            href="#contact"
+            onClick={handleLinkClick}
+            className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+          >
+            Contact
+          </a>
+          <div className="mt-6 space-y-4">
             <a
               href="#contact"
               onClick={handleLinkClick}
-              className="border-white/20 border-b py-4 font-bold text-lg text-white transition-colors hover:text-brand-yellow"
+              className="block w-full cursor-pointer rounded-lg bg-brand-dark px-6 py-4 text-center font-bold text-white shadow-md transition-all hover:bg-brand-dark-dark"
             >
-              Contact
+              BOOK NOW
             </a>
-            <div className="mt-6 space-y-4">
-              <a
-                href="#contact"
-                onClick={handleLinkClick}
-                className="block w-full cursor-pointer rounded-lg bg-brand-dark px-6 py-4 text-center font-bold text-white shadow-md transition-all hover:bg-brand-dark-dark"
-              >
-                BOOK NOW
-              </a>
-              <a
-                href="tel:6362135272"
-                onClick={handleLinkClick}
-                className="flex cursor-pointer items-center justify-center gap-3 rounded-lg bg-brand-yellow px-6 py-4 font-bold text-brand-dark shadow-md transition-all hover:bg-brand-yellow-dark"
-              >
-                <Phone className="h-5 w-5" fill="currentColor" />
-                <span>(636) 213-5272</span>
-              </a>
-            </div>
-          </nav>
-        </div>
-      </header>
+            <a
+              href="tel:6362135272"
+              onClick={handleLinkClick}
+              className="flex cursor-pointer items-center justify-center gap-3 rounded-lg bg-brand-yellow px-6 py-4 font-bold text-brand-dark shadow-md transition-all hover:bg-brand-yellow-dark"
+            >
+              <Phone className="h-5 w-5" fill="currentColor" />
+              <span>(636) 213-5272</span>
+            </a>
+          </div>
+        </nav>
+      </div>
     </>
   );
 }
