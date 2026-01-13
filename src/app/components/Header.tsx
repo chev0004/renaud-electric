@@ -214,34 +214,45 @@ export function Header() {
                 setIsMobileMenuOpen(!isMobileMenuOpen);
               }
             }}
-            className="flex items-center justify-center rounded-lg p-2 text-white transition-colors hover:bg-brand-red/80 md:hidden"
+            className="relative flex items-center justify-center rounded-lg p-2 text-white transition-colors hover:bg-brand-red/80 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            <Menu
+              className={`absolute h-6 w-6 transition-all duration-300 ${
+                isMobileMenuOpen
+                  ? 'rotate-90 scale-0 opacity-0'
+                  : 'rotate-0 scale-100 opacity-100'
+              }`}
+            />
+            <X
+              className={`absolute h-6 w-6 transition-all duration-300 ${
+                isMobileMenuOpen
+                  ? 'rotate-0 scale-100 opacity-100'
+                  : '-rotate-90 scale-0 opacity-0'
+              }`}
+            />
           </button>
         </div>
       </header>
 
       {/* Mobile Menu Overlay - Outside header to avoid transform issues */}
-      {isMobileMenuOpen && (
-        <button
-          type="button"
-          style={{
-            top: `${headerHeight - 1}px`,
-            left: 0,
-            right: 0,
-            bottom: 0,
-          }}
-          className="fixed z-40 bg-black/50 backdrop-blur-sm md:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-          aria-label="Close menu"
-        />
-      )}
+      <button
+        type="button"
+        style={{
+          top: `${headerHeight - 1}px`,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+        className={`fixed z-40 bg-black/50 backdrop-blur-sm transition-all duration-300 ease-in-out md:hidden ${
+          isMobileMenuOpen
+            ? 'visible opacity-100 backdrop-blur-md'
+            : 'invisible opacity-0 backdrop-blur-none'
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-label="Close menu"
+      />
 
       {/* Mobile Menu Slide-in Panel - Outside header to avoid transform issues */}
       <div
@@ -249,10 +260,10 @@ export function Header() {
           top: `${headerHeight - 1}px`,
           height: `calc(100vh - ${headerHeight - 1}px)`,
         }}
-        className={`fixed right-0 z-50 w-80 max-w-[85vw] transform bg-brand-red shadow-2xl transition-[transform,visibility] duration-300 ease-in-out md:hidden ${
+        className={`fixed right-0 z-50 w-80 max-w-[85vw] transform bg-brand-red shadow-2xl transition-all duration-300 ease-out md:hidden ${
           isMobileMenuOpen
-            ? 'visible translate-x-0'
-            : 'invisible translate-x-full'
+            ? 'visible translate-x-0 opacity-100'
+            : 'invisible translate-x-full opacity-0'
         }`}
       >
         <nav className="flex flex-col p-6">
