@@ -7,22 +7,19 @@ export function Services() {
       title: 'Real Estate Repair Addendums',
       icon: <Zap className="h-12 w-12" />,
       desc: 'Fixing inspection deal-breakers to help close your real estate transaction. We specialize in GFCI outlets, panel upgrades, double-tapped breakers, and other electrical issues that home inspectors flag. Preferred partner of Tech Inspect Home Services.',
-      image:
-        'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=800&auto=format&fit=crop',
+      image: '/real-estate.jpg',
     },
     {
       title: 'Residential Electrical',
       icon: <Home className="h-12 w-12" />,
       desc: 'Full-service wiring for new construction and residential expansion in the St. Charles/Warren County corridor. From new builds to home additions, we handle all your residential electrical needs with precision and care.',
-      image:
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
+      image: '/residential.jpg',
     },
     {
       title: 'Service Upgrades',
       icon: <Building2 className="h-12 w-12" />,
       desc: 'Modernizing electrical systems for older homes in areas like Chesterfield. Upgrade your panel, increase capacity, and bring your home up to current electrical codes for safety and reliability.',
-      image:
-        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop',
+      image: '/service-upgrades.jpg',
     },
   ];
 

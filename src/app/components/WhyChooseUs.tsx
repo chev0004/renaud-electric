@@ -51,7 +51,7 @@ export function WhyChooseUs() {
           <div className="relative">
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
               <Image
-                src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1000&auto=format&fit=crop"
+                src="/why-choose.jpg"
                 alt="Drew Renaud, Owner and Principal of Renaud Electric LLC"
                 fill
                 className="object-cover"
