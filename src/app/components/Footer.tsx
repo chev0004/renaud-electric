@@ -165,17 +165,6 @@ export function Footer() {
               <span>St. Charles County</span>
             </div>
           </div>
-
-          <div className="flex flex-col items-center gap-1 sm:items-end">
-            <a
-              href="https://chev.dev?ref=renaud"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative font-semibold text-white/60 text-xs transition-colors after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-white after:transition-all hover:text-white hover:after:w-full"
-            >
-              
-            </a>
-          </div>
         </div>
       </div>
     </footer>
